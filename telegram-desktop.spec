@@ -26,7 +26,7 @@
 
 Name: telegram-desktop
 Version: 2.5.8
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 # Application and 3rd-party modules licensing:
 # * Telegram Desktop - GPLv3+ with OpenSSL exception -- main tarball;
@@ -216,14 +216,11 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{launcher}.desktop
 %{_metainfodir}/%{launcher}.appdata.xml
 
 %changelog
+* Tue Feb 09 2021 Vitaly Zaitsev <vitaly@easycoding.org> - 2.5.8-3
+- Packported upstream patch with crash fixes.
+
 * Thu Feb 04 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.5.8-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
 * Mon Feb 01 2021 Vitaly Zaitsev <vitaly@easycoding.org> - 2.5.8-1
 - Updated to version 2.5.8.
-
-* Fri Jan 01 2021 Leigh Scott <leigh123linux@gmail.com> - 2.5.1-2
-- Rebuilt for new ffmpeg snapshot
-
-* Wed Dec 23 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.5.1-1
-- Updated to version 2.5.1.
