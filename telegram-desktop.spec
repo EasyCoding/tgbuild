@@ -37,9 +37,6 @@ URL: https://github.com/telegramdesktop/%{appname}
 Summary: Telegram Desktop official messaging app
 Source0: %{url}/releases/download/v%{version}/%{appname}-%{version}-full.tar.gz
 
-# https://github.com/telegramdesktop/tdesktop/pull/10336
-Patch100: %{name}-crash-fixes.patch
-
 # Telegram Desktop require more than 8 GB of RAM on linking stage.
 # Disabling all low-memory architectures.
 ExclusiveArch: x86_64
