@@ -7,6 +7,7 @@
 %bcond_with libtgvoip
 %bcond_with rlottie
 %bcond_with wayland
+%bcond_without x11
 
 # Telegram Desktop's constants...
 %global appname tdesktop
@@ -69,10 +70,6 @@ BuildRequires: pkgconfig(libswscale)
 BuildRequires: pkgconfig(libxxhash)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(opus)
-BuildRequires: pkgconfig(xcb)
-BuildRequires: pkgconfig(xcb-keysyms)
-BuildRequires: pkgconfig(xcb-record)
-BuildRequires: pkgconfig(xcb-screensaver)
 
 BuildRequires: cmake
 BuildRequires: desktop-file-utils
@@ -115,6 +112,13 @@ BuildRequires: cmake(KF5Wayland)
 BuildRequires: cmake(Qt5WaylandClient)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: qt5-qtbase-static
+%endif
+
+%if %{with x11}
+BuildRequires: pkgconfig(xcb)
+BuildRequires: pkgconfig(xcb-keysyms)
+BuildRequires: pkgconfig(xcb-record)
+BuildRequires: pkgconfig(xcb-screensaver)
 %endif
 
 # Telegram Desktop require exact version of Qt due to Qt private API usage.
@@ -190,6 +194,11 @@ rm -rf Telegram/ThirdParty/libtgvoip
     -DDESKTOP_APP_DISABLE_WAYLAND_INTEGRATION:BOOL=OFF \
 %else
     -DDESKTOP_APP_DISABLE_WAYLAND_INTEGRATION:BOOL=ON \
+%endif
+%if %{with x11}
+    -DDESKTOP_APP_DISABLE_X11_INTEGRATION:BOOL=OFF \
+%else
+    -DDESKTOP_APP_DISABLE_X11_INTEGRATION:BOOL=ON \
 %endif
 %if %{with rlottie}
     -DDESKTOP_APP_LOTTIE_USE_CACHE:BOOL=OFF \
