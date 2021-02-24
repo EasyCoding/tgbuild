@@ -1,5 +1,4 @@
 %undefine __cmake_in_source_build
-%global _lto_cflags %{nil}
 
 # Build conditionals (with - OFF, without - ON)...
 %bcond_with clang
