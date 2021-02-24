@@ -1,8 +1,8 @@
 %undefine __cmake_in_source_build
 
-%global commit0 be23804afce3bb2e80a1d57a7c1318c71b82b7de
+%global commit0 a19877363082da634a3c851a4698376504d2eaee
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global date 20210124
+%global date 20210203
 
 # Git revision of libvpx...
 %global commit1 5b63f0f821e94f8072eb483014cfc33b05978bb9
@@ -14,7 +14,7 @@
 
 Name: tg_owt
 Version: 0
-Release: 6.%{date}git%{shortcommit0}%{?dist}
+Release: 7.%{date}git%{shortcommit0}%{?dist}
 
 # Main project - BSD
 # abseil-cpp - ASL 2.0
@@ -32,9 +32,6 @@ URL: https://github.com/desktop-app/%{name}
 Source0: %{url}/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
 Source1: https://chromium.googlesource.com/webm/libvpx/+archive/%{commit1}.tar.gz#/libvpx-%{shortcommit1}.tar.gz
 Source2: https://chromium.googlesource.com/libyuv/libyuv/+archive/%{commit2}.tar.gz#/libyuv-%{shortcommit2}.tar.gz
-
-# https://github.com/desktop-app/tg_owt/pull/47
-Patch100: %{name}-shared-fixes.patch
 
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(libavcodec)
@@ -169,6 +166,9 @@ cp -f -p src/rtc_base/third_party/sigslot/README.chromium legal/README.sigslot
 %{_libdir}/lib%{name}.so
 
 %changelog
+* Wed Feb 24 2021 Vitaly Zaitsev <vitaly@easycoding.org> - 0-7.20210203gita198773
+- Updated to latest Git snapshot.
+
 * Thu Feb 04 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 0-6.20210124gitbe23804
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
