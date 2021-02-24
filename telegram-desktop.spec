@@ -17,13 +17,6 @@
 %global toolchain clang
 %endif
 
-# Decrease debuginfo verbosity to reduce memory consumption...
-%ifarch x86_64
-%global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
-%else
-%global optflags %(echo %{optflags} | sed 's/-g /-g2 /')
-%endif
-
 Name: telegram-desktop
 Version: 2.6.0
 Release: 1%{?dist}
