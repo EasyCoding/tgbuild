@@ -1,0 +1,47 @@
+From 9dde3c75d82c58506ef28d781827a2b9e5849b46 Mon Sep 17 00:00:00 2001
+From: Vitaly Zaitsev <vitaly@easycoding.org>
+Date: Fri, 24 Jan 2020 12:11:13 +0100
+Subject: [PATCH 1/2] Build against system json11.
+
+---
+ Makefile.am  | 4 +---
+ configure.ac | 1 +
+ 2 files changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index dba7383..3c23a74 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -26,8 +26,7 @@ audio/Resampler.cpp \
+ os/posix/NetworkSocketPosix.cpp \
+ video/VideoSource.cpp \
+ video/VideoRenderer.cpp \
+-video/ScreamCongestionController.cpp \
+-json11.cpp
++video/ScreamCongestionController.cpp
+ 
+ TGVOIP_HDRS = \
+ TgVoip.h \
+@@ -55,7 +54,6 @@ os/posix/NetworkSocketPosix.h \
+ video/VideoSource.h \
+ video/VideoRenderer.h \
+ video/ScreamCongestionController.h \
+-json11.hpp \
+ utils.h
+ 
+ if TARGET_OS_OSX
+diff --git a/configure.ac b/configure.ac
+index 1756186..b8115d7 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -29,6 +29,7 @@ PKG_CHECK_MODULES(CRYPTO, [libcrypto])
+ AC_CHECK_LIB([m], [floorf])
+ PKG_CHECK_MODULES(OPUS, [opus])
+ AC_CHECK_LIB([pthread], [pthread_create])
++AC_CHECK_LIB([json11], [main], [], [AC_MSG_FAILURE([json11-dev is required but not found])])
+ 
+ AC_CANONICAL_HOST
+ 
+-- 
+2.26.2
+
