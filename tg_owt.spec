@@ -1,8 +1,8 @@
 %undefine __cmake_in_source_build
 
-%global commit0 a19877363082da634a3c851a4698376504d2eaee
+%global commit0 2d804d2c9c5d05324c8ab22f2e6ff8306521b3c3
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global date 20210203
+%global date 20210321
 
 # Git revision of libvpx...
 %global commit1 5b63f0f821e94f8072eb483014cfc33b05978bb9
@@ -14,7 +14,7 @@
 
 Name: tg_owt
 Version: 0
-Release: 7.%{date}git%{shortcommit0}%{?dist}
+Release: 8.%{date}git%{shortcommit0}%{?dist}
 
 # Main project - BSD
 # abseil-cpp - ASL 2.0
@@ -166,6 +166,9 @@ cp -f -p src/rtc_base/third_party/sigslot/README.chromium legal/README.sigslot
 %{_libdir}/lib%{name}.so
 
 %changelog
+* Sat Mar 20 2021 Alexey Gorgurov <alexfails@fedoraproject.org> - 0-8.20210321git2d804d2
+- Updated to latest Git snapshot.
+
 * Wed Feb 24 2021 Vitaly Zaitsev <vitaly@easycoding.org> - 0-7.20210203gita198773
 - Updated to latest Git snapshot.
 
