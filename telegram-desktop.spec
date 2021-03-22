@@ -18,7 +18,7 @@
 %endif
 
 Name: telegram-desktop
-Version: 2.6.1
+Version: 2.7.1
 Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
@@ -49,6 +49,7 @@ BuildRequires: cmake(tl-expected)
 
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(glib-2.0)
+BuildRequires: pkgconfig(glibmm-2.4)
 BuildRequires: pkgconfig(gobject-2.0)
 BuildRequires: pkgconfig(hunspell)
 BuildRequires: pkgconfig(libavcodec)
@@ -214,6 +215,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{launcher}.desktop
 %{_metainfodir}/%{launcher}.appdata.xml
 
 %changelog
+* Sun Mar 21 2021 Alexey Gorgurov <alexfails@fedoraproject.org> - 2.7.1-1
+- Updated to version 2.7.1.
+
 * Thu Feb 25 2021 Vitaly Zaitsev <vitaly@easycoding.org> - 2.6.1-1
 - Updated to version 2.6.1.
 
