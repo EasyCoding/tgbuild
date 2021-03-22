@@ -1,4 +1,5 @@
 %undefine __cmake_in_source_build
+%global debug_package %{nil}
 
 %global commit0 2d804d2c9c5d05324c8ab22f2e6ff8306521b3c3
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
@@ -14,7 +15,7 @@
 
 Name: tg_owt
 Version: 0
-Release: 8.%{date}git%{shortcommit0}%{?dist}
+Release: 9.%{date}git%{shortcommit0}%{?dist}
 
 # Main project - BSD
 # abseil-cpp - ASL 2.0
@@ -33,19 +34,14 @@ Source0: %{url}/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
 Source1: https://chromium.googlesource.com/webm/libvpx/+archive/%{commit1}.tar.gz#/libvpx-%{shortcommit1}.tar.gz
 Source2: https://chromium.googlesource.com/libyuv/libyuv/+archive/%{commit2}.tar.gz#/libyuv-%{shortcommit2}.tar.gz
 
-BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(libavcodec)
 BuildRequires: pkgconfig(libavformat)
 BuildRequires: pkgconfig(libavresample)
 BuildRequires: pkgconfig(libavutil)
 BuildRequires: pkgconfig(libjpeg)
-BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libswscale)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(opus)
-BuildRequires: pkgconfig(protobuf)
-BuildRequires: pkgconfig(x11)
-BuildRequires: pkgconfig(xtst)
 
 BuildRequires: cmake
 BuildRequires: gcc
@@ -53,6 +49,15 @@ BuildRequires: gcc-c++
 BuildRequires: ninja-build
 BuildRequires: yasm
 
+# Disabling all low-memory architectures.
+ExclusiveArch: x86_64
+
+%description
+Special fork of the OpenWebRTC library for the Telegram messenger.
+
+%package devel
+Summary: Development files for %{name}
+Provides: %{name}-static%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 Provides: bundled(abseil-cpp) = 0~gitfba8a31
 Provides: bundled(base64) = 0~git
 Provides: bundled(fft) = 0~git
@@ -70,29 +75,15 @@ Provides: bundled(portaudio) = 0~git
 Provides: bundled(rnnoise) = 0~git91ef40
 Provides: bundled(sigslot) = 0~git
 Provides: bundled(spl_sqrt_floor) = 0~git
-Provides: bundled(usrsctp) = 1.0.0~gitbee946a
-
-# Disabling all low-memory architectures.
-ExclusiveArch: x86_64
-
-%description
-Special fork of the OpenWebRTC library for the Telegram messenger.
-
-%package devel
-Summary: Development files for %{name}
-Requires: %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
-Requires: pkgconfig(alsa)
+Provides: bundled(usrsctp) = 0.9.3.0~gitbee946a
 Requires: pkgconfig(libavcodec)
 Requires: pkgconfig(libavformat)
 Requires: pkgconfig(libavresample)
 Requires: pkgconfig(libavutil)
 Requires: pkgconfig(libjpeg)
-Requires: pkgconfig(libpulse)
 Requires: pkgconfig(libswscale)
 Requires: pkgconfig(openssl)
 Requires: pkgconfig(opus)
-Requires: pkgconfig(x11)
-Requires: pkgconfig(xtst)
 
 %description devel
 %{summary}.
@@ -145,27 +136,29 @@ cp -f -p src/rtc_base/third_party/sigslot/README.chromium legal/README.sigslot
 
 %build
 # CMAKE_BUILD_TYPE should always be Release due to some hardcoded checks.
+# Warning: Building as a shared library is not supported by upstream.
 %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON \
-    -DTG_OWT_USE_PROTOBUF:BOOL=ON \
+    -DBUILD_SHARED_LIBS:BOOL=OFF \
+    -DTG_OWT_USE_PROTOBUF:BOOL=OFF \
     -DTG_OWT_PACKAGED_BUILD:BOOL=ON
 %cmake_build
 
 %install
 %cmake_install
 
-%files
+%files devel
 %doc src/AUTHORS src/OWNERS legal/README.*
 %license LICENSE src/PATENTS legal/LICENSE.* legal/PATENTS.*
-%{_libdir}/lib%{name}.so.0*
-
-%files devel
 %{_includedir}/%{name}
 %{_libdir}/cmake/%{name}
-%{_libdir}/lib%{name}.so
+%{_libdir}/lib%{name}.a
 
 %changelog
+* Mon Mar 22 2021 Alexey Gorgurov <alexfails@fedoraproject.org> - 0-9.20210321git2d804d2
+- Converted to static-only library as the upstream doesn't support shared builds.
+
 * Sat Mar 20 2021 Alexey Gorgurov <alexfails@fedoraproject.org> - 0-8.20210321git2d804d2
 - Updated to latest Git snapshot.
 
