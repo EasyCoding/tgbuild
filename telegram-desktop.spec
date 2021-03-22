@@ -30,6 +30,9 @@ URL: https://github.com/telegramdesktop/%{appname}
 Summary: Telegram Desktop official messaging app
 Source0: %{url}/releases/download/v%{version}/%{appname}-%{version}-full.tar.gz
 
+# https://github.com/TelegramMessenger/tgcalls/commit/eded7cc540123eaf26361958b9a61c65cb2f7cfc
+Patch100: %{name}-build-fix.patch
+
 # Telegram Desktop require more than 8 GB of RAM on linking stage.
 # Disabling all low-memory architectures.
 ExclusiveArch: x86_64
@@ -123,6 +126,9 @@ Requires: qt5-qtimageformats%{?_isa}
 # Short alias for the main package...
 Provides: telegram = %{?epoch:%{epoch}:}%{version}-%{release}
 Provides: telegram%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+
+# Obsolete shared version of tg_owt...
+Obsoletes: tg_owt < 0-8
 
 %description
 Telegram is a messaging app with a focus on speed and security, it’s super
