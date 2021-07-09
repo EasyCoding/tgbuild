@@ -1,9 +1,9 @@
 %undefine __cmake_in_source_build
 %global debug_package %{nil}
 
-%global commit0 2d804d2c9c5d05324c8ab22f2e6ff8306521b3c3
+%global commit0 91d836dc84a16584c6ac52b36c04c0de504d9c34
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global date 20210321
+%global date 20210709
 
 # Git revision of libvpx...
 %global commit1 5b63f0f821e94f8072eb483014cfc33b05978bb9
@@ -15,7 +15,7 @@
 
 Name: tg_owt
 Version: 0
-Release: 9.%{date}git%{shortcommit0}%{?dist}
+Release: 10.%{date}git%{shortcommit0}%{?dist}
 
 # Main project - BSD
 # abseil-cpp - ASL 2.0
@@ -34,14 +34,25 @@ Source0: %{url}/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
 Source1: https://chromium.googlesource.com/webm/libvpx/+archive/%{commit1}.tar.gz#/libvpx-%{shortcommit1}.tar.gz
 Source2: https://chromium.googlesource.com/libyuv/libyuv/+archive/%{commit2}.tar.gz#/libyuv-%{shortcommit2}.tar.gz
 
+BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(libavcodec)
 BuildRequires: pkgconfig(libavformat)
 BuildRequires: pkgconfig(libavresample)
 BuildRequires: pkgconfig(libavutil)
 BuildRequires: pkgconfig(libjpeg)
+BuildRequires: pkgconfig(libpipewire-0.3)
+BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libswscale)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(opus)
+BuildRequires: pkgconfig(x11)
+BuildRequires: pkgconfig(xcomposite)
+BuildRequires: pkgconfig(xdamage)
+BuildRequires: pkgconfig(xext)
+BuildRequires: pkgconfig(xfixes)
+BuildRequires: pkgconfig(xrandr)
+BuildRequires: pkgconfig(xrender)
+BuildRequires: pkgconfig(xtst)
 
 BuildRequires: cmake
 BuildRequires: gcc
@@ -76,14 +87,25 @@ Provides: bundled(rnnoise) = 0~git91ef40
 Provides: bundled(sigslot) = 0~git
 Provides: bundled(spl_sqrt_floor) = 0~git
 Provides: bundled(usrsctp) = 0.9.3.0~gitbee946a
+Requires: pkgconfig(alsa)
 Requires: pkgconfig(libavcodec)
 Requires: pkgconfig(libavformat)
 Requires: pkgconfig(libavresample)
 Requires: pkgconfig(libavutil)
 Requires: pkgconfig(libjpeg)
+Requires: pkgconfig(libpipewire-0.3)
+Requires: pkgconfig(libpulse)
 Requires: pkgconfig(libswscale)
 Requires: pkgconfig(openssl)
 Requires: pkgconfig(opus)
+Requires: pkgconfig(x11)
+Requires: pkgconfig(xcomposite)
+Requires: pkgconfig(xdamage)
+Requires: pkgconfig(xext)
+Requires: pkgconfig(xfixes)
+Requires: pkgconfig(xrandr)
+Requires: pkgconfig(xrender)
+Requires: pkgconfig(xtst)
 
 %description devel
 %{summary}.
@@ -156,6 +178,10 @@ cp -f -p src/rtc_base/third_party/sigslot/README.chromium legal/README.sigslot
 %{_libdir}/lib%{name}.a
 
 %changelog
+* Fri Jul 09 2021 Alexey Gorgurov <alexfails@fedoraproject.org> - 0-10.20210709git91d836d
+- Updated to latest Git snapshot.
+- Added depedency from libpipewire-0.3, libpulse and ALSA.
+
 * Mon Mar 22 2021 Alexey Gorgurov <alexfails@fedoraproject.org> - 0-9.20210321git2d804d2
 - Converted to static-only library as the upstream doesn't support shared builds.
 
